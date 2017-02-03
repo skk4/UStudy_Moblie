@@ -1,0 +1,5 @@
+<resources>
+    <string name="base_url">http://school.yoya-dev.com/mobile/activities.html</string>
+    <string name="http_client_base_url">http://school.yoya-dev.com/</string>
+    <string name="main_url">http://www.yoya-dev.com/do</string>
+</resources>

@@ -1,0 +1,96 @@
+apply plugin: 'com.android.application'
+
+android {
+    signingConfigs {
+        config {
+            keyAlias 'YoyaOrg'
+            keyPassword 'y!o@y#a2016'
+            storeFile file(project.rootDir.getPath() + '/keyStore/yoyaOrg.jks')
+            storePassword 'y!o@y#a2016'
+        }
+    }
+
+    compileSdkVersion 25
+    buildToolsVersion '25.0.2'
+
+    defaultConfig {
+        applicationId "org.yoya.com.yoyaorg"
+        minSdkVersion 15
+        targetSdkVersion 23
+        versionCode 6
+        versionName "1.1"
+        jackOptions {
+            enabled true
+        }
+        compileOptions {
+            sourceCompatibility JavaVersion.VERSION_1_8
+            targetCompatibility JavaVersion.VERSION_1_8
+        }
+    }
+
+    /*sourceSets {
+        _99cj.setRoot('src/build_type/_99cj')
+        _test.setRoot('src/build_type/_test')
+        _gray.setRoot('src/build_type/_gray')
+        _official.setRoot('src/build_type/_official')
+    }
+*/
+    buildTypes {
+        release {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+      /*  _official {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+
+        _99cj {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        _test {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }
+        _gray {
+            minifyEnabled false
+            signingConfig signingConfigs.config
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        }*/
+    }
+
+    productFlavors {
+        yoya_org {
+            manifestPlaceholders = [TD_CHANNEL_ID: "yoyaOrg"]
+        }
+    }
+
+    lintOptions {
+        abortOnError false
+    }
+    // rename the apk with the version name
+    // add output file sub folder by build type
+    applicationVariants.all { variant ->
+        variant.outputs.each { output ->
+            output.outputFile = new File(
+                    output.outputFile.parent + "/${variant.buildType.name}",
+                    "yoya_org.apk".toLowerCase())
+
+        }
+    }
+}
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    testCompile 'junit:junit:4.12'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.android.support:appcompat-v7:23.3.0'
+    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.loopj.android:android-async-http:1.4.9'
+}
